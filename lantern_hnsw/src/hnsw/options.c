@@ -236,7 +236,7 @@ void _PG_init(void)
                       HNSW_DEFAULT_DIM,
                       1,
                       HNSW_MAX_DIM
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                       ,
                       AccessExclusiveLock
 #endif
@@ -247,7 +247,7 @@ void _PG_init(void)
                       HNSW_DEFAULT_M,
                       2,
                       HNSW_MAX_M
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                       ,
                       AccessExclusiveLock
 #endif
@@ -258,7 +258,7 @@ void _PG_init(void)
                       HNSW_DEFAULT_EF_CONSTRUCTION,
                       1,
                       HNSW_MAX_EF_CONSTRUCTION
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                       ,
                       AccessExclusiveLock
 #endif
@@ -270,7 +270,7 @@ void _PG_init(void)
                       HNSW_DEFAULT_EF,
                       1,
                       HNSW_MAX_EF
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                       ,
                       AccessExclusiveLock
 #endif
@@ -280,7 +280,7 @@ void _PG_init(void)
                          "LanternDB expored index file path",
                          NULL,
                          NULL
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                          ,
                          AccessExclusiveLock
 #endif
@@ -290,7 +290,7 @@ void _PG_init(void)
                        "Whether or not use to quantized table codebook for index construction. Assumes codebook is "
                        "called [tablename]_pq_codebook",
                        false
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                        ,
                        AccessExclusiveLock
 #endif
@@ -310,13 +310,14 @@ void _PG_init(void)
                       "When set, will quantize 32 bit vector elements into specified number of bits.",
                       QUANT_BITS_UNSET,
                       1,
-                      32);
+                      32,
+                      AccessExclusiveLock);
 #endif
     add_bool_reloption(ldb_hnsw_index_withopts,
                        "external",
                        "Whether or not use external indexing protocol",
                        false
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
                        ,
                        AccessExclusiveLock
 #endif

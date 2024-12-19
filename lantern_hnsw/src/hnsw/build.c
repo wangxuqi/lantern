@@ -68,7 +68,7 @@
 #define LDB_PROGRESS_CREATEIDX_TUPLES_DONE  0
 #endif
 
-#if PG_VERSION_NUM >= 130000
+#if PG_VERSION_NUM >= 120000
 #define CALLBACK_ITEM_POINTER ItemPointer tid
 #else
 #define CALLBACK_ITEM_POINTER HeapTuple hup
@@ -146,7 +146,7 @@ static void BuildCallback(
     // we can later use this for some optimizations I think
     LDB_UNUSED(tupleIsAlive);
 
-#if PG_VERSION_NUM < 130000
+#if PG_VERSION_NUM < 120000
     ItemPointer tid = &hup->t_self;
 #endif
 
@@ -293,7 +293,7 @@ static int GetArrayLengthFromHeap(Relation heap, int indexCol, IndexInfo *indexI
 
 int GetHnswIndexDimensions(Relation index, IndexInfo *indexInfo)
 {
-    HnswColumnType columnType = GetIndexColumnType(index);
+    HnswColumnType columnType = GetHNSWIndexColumnType(index);
 
     // check if column is type of real[] or integer[]
     if(columnType == REAL_ARRAY || columnType == INT_ARRAY) {
@@ -340,7 +340,7 @@ void CheckHnswIndexDimensions(Relation index, Datum arrayDatum, int dimensions)
 {
     ArrayType     *array;
     int            n_items;
-    HnswColumnType indexType = GetIndexColumnType(index);
+    HnswColumnType indexType = GetHNSWIndexColumnType(index);
 
     if(indexType == REAL_ARRAY || indexType == INT_ARRAY) {
         array = DatumGetArrayTypeP(arrayDatum);
@@ -376,7 +376,7 @@ static void InitBuildState(ldb_HnswBuildState *buildstate, Relation heap, Relati
     buildstate->heap = heap;
     buildstate->index = index;
     buildstate->indexInfo = indexInfo;
-    buildstate->columnType = GetIndexColumnType(index);
+    buildstate->columnType = GetHNSWIndexColumnType(index);
     buildstate->dimensions = GetHnswIndexDimensions(index, indexInfo);
     buildstate->index_file_path = ldb_HnswGetIndexFilePath(index);
     buildstate->index_file_fd = -1;

@@ -450,7 +450,7 @@ HnswColumnType GetColumnTypeFromOid(Oid oid)
 /*
  * Get data type of index
  */
-HnswColumnType GetIndexColumnType(Relation index)
+HnswColumnType GetHNSWIndexColumnType(Relation index)
 {
     TupleDesc         indexTupDesc = RelationGetDescr(index);
     Form_pg_attribute attr = TupleDescAttr(indexTupDesc, 0);

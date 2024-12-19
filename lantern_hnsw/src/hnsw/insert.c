@@ -153,7 +153,7 @@ bool ldb_aminsert(Relation         index,
 
     insertstate->uidx = uidx;
     insertstate->retriever_ctx = opts.retriever_ctx;
-    insertstate->columnType = GetIndexColumnType(index);
+    insertstate->columnType = GetHNSWIndexColumnType(index);
 
     hdr_page = NULL;
 

@@ -69,7 +69,7 @@ IndexScanDesc ldb_ambeginscan(Relation index, int nkeys, int norderbys)
     scanstate = (HnswScanState *)palloc0(sizeof(HnswScanState));
     scanstate->first = true;
     scanstate->retriever_ctx = opts.retriever_ctx = retriever_ctx;
-    scanstate->columnType = GetIndexColumnType(index);
+    scanstate->columnType = GetHNSWIndexColumnType(index);
     scanstate->dimensions = opts.dimensions = dimensions;
 
     if(opts.pq) {
